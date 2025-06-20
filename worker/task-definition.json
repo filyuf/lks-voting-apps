@@ -82,6 +82,5 @@
     },
     "registeredAt": "2025-06-20T02:46:54.905Z",
     "registeredBy": "arn:aws:sts::900641642158:assumed-role/voclabs/user4100891=JAKARTA_TIMUR_2_-_FILZAH",
-    "enableFaultInjection": false,
     "tags": []
 }
