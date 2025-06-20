@@ -52,6 +52,7 @@ jobs:
     needs: build
     name: Pull Image on master
     runs-on: master
+    environment: Development
     steps:
       - name: Update runner's docker Version, as worker module requires it
         run: |
@@ -89,6 +90,7 @@ jobs:
   node1:
     needs: build
     name: Pull Image on node1
+    environment: Development
     runs-on: node1
     steps:
       - name: Update runner's docker Version, as worker module requires it
@@ -127,6 +129,7 @@ jobs:
   node2:
     needs: build
     name: Pull Image on node2
+    environment: Development
     runs-on: node2
     steps:
       - name: Update runner's docker Version, as worker module requires it
