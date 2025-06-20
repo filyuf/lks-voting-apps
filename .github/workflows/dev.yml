@@ -49,6 +49,7 @@ jobs:
         echo "::set-output name=worker_image::$ECR_REGISTRY/$ECR_REPOSITORY:$WORKER_IMAGE_TAG"
 
   master:
+    needs: build
     name: Pull Image on master
     runs-on: master
     steps:
@@ -86,6 +87,7 @@ jobs:
           docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$RESULT_IMAGE_TAG 
           
   node1:
+    needs: build
     name: Pull Image on node1
     runs-on: node1
     steps:
@@ -123,6 +125,7 @@ jobs:
           docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$RESULT_IMAGE_TAG 
 
   node2:
+    needs: build
     name: Pull Image on node2
     runs-on: node2
     steps:
@@ -160,6 +163,7 @@ jobs:
           docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$RESULT_IMAGE_TAG 
     
   deploy:  
+    needs: [master, node1, node2]
     name: Deploy Application into docker swarm
     runs-on: master
     steps:
