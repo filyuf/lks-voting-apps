@@ -23,8 +23,8 @@ namespace Worker
                     Ssl = true
                 };
 
-                var redis = ConnectionMultiplexer.Connect(options);
-                var db = redis.GetDatabase();
+                var redisConn = ConnectionMultiplexer.Connect(options);
+                var redis = redisConn.GetDatabase();
                 var pgsql = OpenDbConnection("Server=lks-rds.c2u32ukbdksl.us-east-1.rds.amazonaws.com;Username=postgres;Password=LKSNCC2024;Database=lksdb;");
 
 
@@ -40,10 +40,10 @@ namespace Worker
                     Thread.Sleep(100);
 
                     // Reconnect redis if down
-                    if (redis == null || !redis.IsConnected) {
+                    if (redisConn == null || !redisConn.IsConnected) {
                         Console.WriteLine("Reconnecting Redis");
-                        var redis = ConnectionMultiplexer.Connect(options);
-                        var db = redis.GetDatabase();
+                        var redisConn = ConnectionMultiplexer.Connect(options);
+                        var redis = redisConn.GetDatabase();
                     }
 
                     string json = redis.ListLeftPopAsync("votes").Result;
