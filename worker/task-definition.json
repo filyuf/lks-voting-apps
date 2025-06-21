@@ -1,10 +1,12 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:900641642158:task-definition/lks-td-worker:1",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:523288456181:task-definition/lks-td-worker:1",
     "containerDefinitions": [
         {
             "name": "lks-worker-container",
-            "image": "900641642158.dkr.ecr.us-east-1.amazonaws.com/lks-voting-image:worker-prod-latest",
-            "cpu": 0,
+            "image": "523288456181.dkr.ecr.us-east-1.amazonaws.com/lks-voting-image:worker-prod-latest",
+            "cpu": 717,
+            "memory": 512,
+            "memoryReservation": 410,
             "portMappings": [],
             "essential": true,
             "environment": [],
@@ -28,8 +30,8 @@
         }
     ],
     "family": "lks-td-worker",
-    "taskRoleArn": "arn:aws:iam::900641642158:role/LabRole",
-    "executionRoleArn": "arn:aws:iam::900641642158:role/LabRole",
+    "taskRoleArn": "arn:aws:iam::523288456181:role/LabRole",
+    "executionRoleArn": "arn:aws:iam::523288456181:role/LabRole",
     "networkMode": "awsvpc",
     "revision": 1,
     "volumes": [],
@@ -49,6 +51,9 @@
         },
         {
             "name": "com.amazonaws.ecs.capability.docker-remote-api.1.28"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
         },
         {
             "name": "com.amazonaws.ecs.capability.task-iam-role"
@@ -80,7 +85,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2025-06-20T02:46:54.905Z",
-    "registeredBy": "arn:aws:sts::900641642158:assumed-role/voclabs/user4100891=JAKARTA_TIMUR_2_-_FILZAH",
+    "registeredAt": "2025-06-21T08:05:23.698Z",
+    "registeredBy": "arn:aws:sts::523288456181:assumed-role/voclabs/user4100891=JAKARTA_TIMUR_2_-_FILZAH",
     "tags": []
 }
