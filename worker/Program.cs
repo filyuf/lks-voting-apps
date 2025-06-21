@@ -40,7 +40,7 @@ namespace Worker
                     Thread.Sleep(100);
 
                     // Reconnect redis if down
-                    if (redisConn == null || !redisConn.IsConnected) {
+                    if (redis == null || !redis.IsConnected) {
                         Console.WriteLine("Reconnecting Redis");
                         var redis = ConnectionMultiplexer.Connect(options);
                         var db = redis.GetDatabase();
