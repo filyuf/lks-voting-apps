@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: us-east-1                 
   ECR_REPOSITORY: lks-voting-image
-  ECS_SERVICE_WORKER: lks-worker-service  
+  ECS_SERVICE_WORKER: worker-service  
   ECS_SERVICE_VOTE: lks-td-vote-service-522ci4s0    
   ECS_SERVICE_RESULT: lks-td-result-service-ya8rc170         
   ECS_CLUSTER: lks-voting-cluster
@@ -118,13 +118,13 @@ jobs:
         container-name: ${{ env.VOTE_CONTAINER_NAME }}
         image: ${{ steps.set-vars.outputs.vote_image }}
 
-    # - name: Deploy ECS Service - Worker
-    #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-    #   with:
-    #     task-definition: ${{ steps.task-def-worker.outputs.task-definition }}
-    #     service: ${{ env.ECS_SERVICE_WORKER }}
-    #     cluster: ${{ env.ECS_CLUSTER }}
-    #     wait-for-service-stability: true
+    - name: Deploy ECS Service - Worker
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def-worker.outputs.task-definition }}
+        service: ${{ env.ECS_SERVICE_WORKER }}
+        cluster: ${{ env.ECS_CLUSTER }}
+        wait-for-service-stability: true
 
     # # Vote
     # - name: Update ECS Task Definition - Vote
