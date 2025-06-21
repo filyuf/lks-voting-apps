@@ -42,9 +42,10 @@ namespace Worker
                     // Reconnect redis if down
                     if (redisConn == null || !redisConn.IsConnected) {
                         Console.WriteLine("Reconnecting Redis");
-                        var redisConn = ConnectionMultiplexer.Connect(options);
-                        var redis = redisConn.GetDatabase();
+                        redisConn = ConnectionMultiplexer.Connect(options); // ← tanpa `var`
+                        redis = redisConn.GetDatabase(); // ← tanpa `var`
                     }
+
 
                     string json = redis.ListLeftPopAsync("votes").Result;
                     if (json != null)
