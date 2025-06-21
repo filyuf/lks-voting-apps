@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:523288456181:task-definition/lks-td-worker:1",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:523288456181:task-definition/lks-td-worker:3",
     "containerDefinitions": [
         {
             "name": "lks-worker-container",
@@ -10,10 +10,8 @@
             "portMappings": [],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
-            "ulimits": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -23,8 +21,7 @@
                     "max-buffer-size": "25m",
                     "awslogs-region": "us-east-1",
                     "awslogs-stream-prefix": "ecs"
-                },
-                "secretOptions": []
+                }
             },
             "systemControls": []
         }
@@ -33,7 +30,7 @@
     "taskRoleArn": "arn:aws:iam::523288456181:role/LabRole",
     "executionRoleArn": "arn:aws:iam::523288456181:role/LabRole",
     "networkMode": "awsvpc",
-    "revision": 1,
+    "revision": 3,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -85,7 +82,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2025-06-21T08:05:23.698Z",
+    "registeredAt": "2025-06-21T09:10:34.696Z",
     "registeredBy": "arn:aws:sts::523288456181:assumed-role/voclabs/user4100891=JAKARTA_TIMUR_2_-_FILZAH",
     "tags": []
 }

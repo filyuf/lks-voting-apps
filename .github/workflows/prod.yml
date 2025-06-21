@@ -100,13 +100,31 @@ jobs:
         container-name: ${{ env.WORKER_CONTAINER_NAME }}
         image: ${{ steps.set-vars.outputs.worker_image }}
 
-    - name: Deploy ECS Service - Worker
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+    # Result
+    - name: Update ECS Task Definition - result
+      id: task-def-result
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: ${{ steps.task-def-worker.outputs.task-definition }}
-        service: ${{ env.ECS_SERVICE_WORKER }}
-        cluster: ${{ env.ECS_CLUSTER }}
-        wait-for-service-stability: true
+        task-definition: ${{ env.RESULT_TASK_DEFINITION }}
+        container-name: ${{ env.RESULT_CONTAINER_NAME }}
+        image: ${{ steps.set-vars.outputs.result_image }}
+
+      # Vote
+    - name: Update ECS Task Definition - Vote
+      id: task-def-vote
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: ${{ env.VOTE_TASK_DEFINITION }}
+        container-name: ${{ env.VOTE_CONTAINER_NAME }}
+        image: ${{ steps.set-vars.outputs.vote_image }}
+
+    # - name: Deploy ECS Service - Worker
+    #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+    #   with:
+    #     task-definition: ${{ steps.task-def-worker.outputs.task-definition }}
+    #     service: ${{ env.ECS_SERVICE_WORKER }}
+    #     cluster: ${{ env.ECS_CLUSTER }}
+    #     wait-for-service-stability: true
 
     # # Vote
     # - name: Update ECS Task Definition - Vote
