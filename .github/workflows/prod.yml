@@ -9,8 +9,8 @@ env:
   AWS_REGION: us-east-1                 
   ECR_REPOSITORY: lks-voting-image
   ECS_SERVICE_WORKER: worker-service  
-  ECS_SERVICE_VOTE: lks-td-vote-service-522ci4s0    
-  ECS_SERVICE_RESULT: lks-td-result-service-ya8rc170         
+  ECS_SERVICE_VOTE: lks-td-vote-service-j5ql42ku
+  ECS_SERVICE_RESULT: result-service      
   ECS_CLUSTER: lks-voting-cluster
   WORKER_TASK_DEFINITION: worker/task-definition.json
   VOTE_TASK_DEFINITION: vote/task-definition.json
@@ -101,7 +101,7 @@ jobs:
         image: ${{ steps.set-vars.outputs.worker_image }}
 
     # Result
-    - name: Update ECS Task Definition - result
+    - name: Update ECS Task Definition - Result
       id: task-def-result
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
@@ -126,39 +126,21 @@ jobs:
         cluster: ${{ env.ECS_CLUSTER }}
         wait-for-service-stability: true
 
-    # # Vote
-    # - name: Update ECS Task Definition - Vote
-    #   id: task-def-vote
-    #   uses: aws-actions/amazon-ecs-render-task-definition@v1
-    #   with:
-    #     task-definition: ${{ env.VOTE_TASK_DEFINITION }}
-    #     container-name: ${{ env.VOTE_CONTAINER_NAME }}
-    #     image: ${{ steps.set-vars.outputs.vote_image }}
+    - name: Deploy ECS Service - Vote
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def-vote.outputs.task-definition }}
+        service: ${{ env.ECS_SERVICE_VOTE }}
+        cluster: ${{ env.ECS_CLUSTER }}
+        wait-for-service-stability: true
 
-    # - name: Deploy ECS Service - Vote
-    #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-    #   with:
-    #     task-definition: ${{ steps.task-def-vote.outputs.task-definition }}
-    #     service: ${{ env.ECS_SERVICE_VOTE }}
-    #     cluster: ${{ env.ECS_CLUSTER }}
-    #     wait-for-service-stability: true
-
-    # # Result
-    # - name: Update ECS Task Definition - Result
-    #   id: task-def-result
-    #   uses: aws-actions/amazon-ecs-render-task-definition@v1
-    #   with:
-    #     task-definition: ${{ env.RESULT_TASK_DEFINITION }}
-    #     container-name: ${{ env.RESULT_CONTAINER_NAME }}
-    #     image: ${{ steps.set-vars.outputs.result_image }}
-
-    # - name: Deploy ECS Service - Result
-    #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-    #   with:
-    #     task-definition: ${{ steps.task-def-result.outputs.task-definition }}
-    #     service: ${{ env.ECS_SERVICE_RESULT }}
-    #     cluster: ${{ env.ECS_CLUSTER }}
-    #     wait-for-service-stability: true
+    - name: Deploy ECS Service - Result
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def-result.outputs.task-definition }}
+        service: ${{ env.ECS_SERVICE_RESULT }}
+        cluster: ${{ env.ECS_CLUSTER }}
+        wait-for-service-stability: true
 
     # # SNS Notification
     # - name: Publish Message To SNS Subscribers
